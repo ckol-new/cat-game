@@ -1,0 +1,11 @@
+# main file
+import pygame
+
+def main():
+    ...
+
+
+
+if __name__ == "__main__":
+    main()
+    quit()
