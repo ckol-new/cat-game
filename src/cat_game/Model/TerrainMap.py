@@ -1,5 +1,4 @@
-from .Tile import Tile
-import resources.maps
+from cat_game.Model.ENUM.Tile import Tile
 import pathlib
 
 
