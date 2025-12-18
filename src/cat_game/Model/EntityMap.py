@@ -13,11 +13,15 @@ class EntityMap:
         # convert terrain matrix to entity matrix
         self.__entity_matrix = self.__convert_to_entity_matrix(terrain_map.get_terrain_matrix())
 
+        # active entity array
+        self.__active_entity_array = []
+
 
     # convert to entity map
     def __convert_to_entity_matrix(self, terrain_matrix):
         e_matrix = []
         i = 0
+
         for row in terrain_matrix:
             e_matrix.append([])
 
@@ -26,10 +30,35 @@ class EntityMap:
                     e_matrix[i].append(self.__PASSABLE)
                 else:
                     e_matrix[i].append(self.__IMPASSABLE)
-
             i += 1
 
         return e_matrix
+
+    # move entity
+    def move_entity(self, entity, new_pos):
+        if not self.is_in_bounds(new_pos): raise Exception("TRIED TO MOVE ENTITY OFF OF THE GRID")
+        if not self.is_walkable(new_pos): raise Exception("TRIED TO MOVE ENTITY ONTO UNWALKABLE POSITION")
+
+        old_pos = entity.get_position()
+        self.__entity_matrix[new_pos[0]][new_pos[1]] = entity
+        self.__entity_matrix[old_pos[0]][old_pos[1]] = self.__PASSABLE
+        entity.set_position(new_pos)
+
+    # kill entity (remove from entity matrix and active entity array)
+    # returns void
+    def kill_entity(self, entity):
+        pos = entity.get_position()
+        self.__entity_matrix[pos[0]][pos[1]] = self.__PASSABLE
+        self.__active_entity_array.remove(entity)
+
+    # def entity is alive (in active entity array list, and has health greater than 0
+    # return boolean
+    def is_alive(self, entity):
+        if entity.get_health() <= 0: return False
+        elif not (entity in self.__active_entity_array): return False
+
+        return True
+
 
     # randomize valid pos
     def get_rand_valid_pos(self):
@@ -47,6 +76,8 @@ class EntityMap:
         if not self.is_walkable(position):
             raise Exception("POSITION IS NOT WALKABLE")
         self.__entity_matrix[position[0]][position[1]] = entity
+        entity.set_position(position)
+        self.__active_entity_array.append(entity)
 
 
     # is in bound

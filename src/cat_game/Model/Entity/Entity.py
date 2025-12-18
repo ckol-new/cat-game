@@ -1,5 +1,5 @@
 class Entity:
-    def __init__(self, health, damage, movement_type, movement_range, attack_type, attack_range, texture_name, allegiance):
+    def __init__(self, health, damage, movement_type, movement_range, attack_type, attack_range, texture_name, allegiance, position=(-1, -1)):
         self.__health = health
         self.__damage = damage
         self.__movement_type = movement_type
@@ -9,17 +9,22 @@ class Entity:
         self.__texture_name = texture_name
         self.__allegiance= allegiance
         self.__health = health
+        self.__position = position
+
+
 
     # getters
-    def getHealth(self): return self.__health
-    def getDamage(self): return self.__damage
-    def getMovementType(self): return self.__movement_type
-    def getMovementRange(self): return self.__movement_range
-    def getAttackType(self): return self.__attack_type
-    def getAttackRange(self): return self.__attack_range
-    def getTextureName(self): return self.__texture_name
-    def getAllegiance(self): return self.__allegiance
+    def get_health(self): return self.__health
+    def get_damage(self): return self.__damage
+    def get_movement_type(self): return self.__movement_type
+    def get_movement_range(self): return self.__movement_range
+    def get_attack_type(self): return self.__attack_type
+    def get_attack_range(self): return self.__attack_range
+    def get_texture_name(self): return self.__texture_name
+    def get_allegiance(self): return self.__allegiance
+    def get_position(self): return self.__position
 
     # setters
-    def setHealth(self, health): self.__health = health
-    def setDamage(self, damage): self.__damage = damage
+    def set_health(self, health): self.__health = health
+    def set_damage(self, damage): self.__damage = damage
+    def set_position(self, new_position): self.__position = new_position

@@ -13,6 +13,8 @@ def main():
     LOCAL_DIFF = 3
     em = EntityMap(tm, LOCAL_DIFF)
 
+    print(em.is_in_bounds((0, 5)))
+    print(em.is_walkable((0, 5)))
 
     # place entity
     tabby = TabbyCat(EntityType.TABBY_HEALTH,

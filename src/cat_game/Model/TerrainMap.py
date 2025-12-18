@@ -31,6 +31,9 @@ class TerrainMap:
 
     # get terrain matrix from map file
     def __generate_terrain_matrix(self, content):
+        # remove the header of map file (specifying size: ie. 10 10)
+        content.pop(0)
+
         # initiate terrain matrix
         t_matrix = []
 
@@ -41,7 +44,6 @@ class TerrainMap:
             for char in list(line):
                 if (char == "."): t_matrix[i].append(Tile.STONE_FLOOR)
                 elif (char == "w"): t_matrix[i].append(Tile.STONE_WALL)
-
             # update index
             i += 1
 
