@@ -11,7 +11,7 @@ class Tile(Enum):
         self.__char = char
 
     # getters
-    def getWalkable(self):
+    def isWalkable(self):
         return self.__walkable
     def getTextureName(self):
         return self.__texture_name

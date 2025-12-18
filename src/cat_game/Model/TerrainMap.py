@@ -15,7 +15,7 @@ class TerrainMap:
         self.__map_size = self.__get_map_size(map_content)
 
         # get terrain matrix
-        self.__terrain_matrix = self.__get_terrain_matrix(map_content)  # initialize empty
+        self.__terrain_matrix = self.__generate_terrain_matrix(map_content)  # initialize empty
 
     # open map file
     def __get_map_file_list(self):
@@ -31,7 +31,7 @@ class TerrainMap:
         return int_size
 
     # get terrain matrix from map file
-    def __get_terrain_matrix(self, content):
+    def __generate_terrain_matrix(self, content):
         # initiate terrain matrix
         t_matrix = []
 
@@ -47,6 +47,9 @@ class TerrainMap:
             i += 1
 
         return t_matrix
+
+    def get_map_size(self): return self.__map_size
+    def get_terrain_matrix(self): return self.__terrain_matrix
 
     # DEBUG display
     def debug_display(self):
