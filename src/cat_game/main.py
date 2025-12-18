@@ -4,6 +4,7 @@ from Model.TerrainMap import TerrainMap
 from Model.EntityMap import EntityMap
 from Model.Entity.TabbyCat import TabbyCat
 from Model.ENUM.EntityType import EntityType
+from Model.Entity.SmallDog import SmallDog
 
 
 def main():
@@ -17,17 +18,19 @@ def main():
     print(em.is_walkable((0, 5)))
 
     # place entity
-    tabby = TabbyCat(EntityType.TABBY_HEALTH,
-                     EntityType.TABBY_DAMAGE,
-                     EntityType.TABBY_MOVEMENT_TYPE,
-                     EntityType.TABBY_MOVEMENT_RANGE,
-                     EntityType.TABBY_ATTACK_TYPE,
-                     EntityType.TABBY_ATTACK_RANGE,
-                     EntityType.TABBY_TEXTURE,
-                     EntityType.TABBY_ALLEGIANCE)
+    tabby = TabbyCat()
     rand_pos = em.get_rand_valid_pos()
     em.place_entity(tabby, rand_pos)
     em.debug_display()
+
+    small_dog = SmallDog()
+    rand_pos2 = em.get_rand_valid_pos()
+    em.place_entity(small_dog, rand_pos2)
+    em.debug_display()
+    print(rand_pos2)
+    print(small_dog.get_position())
+
+
 
 if __name__ == "__main__":
     main()

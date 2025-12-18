@@ -12,6 +12,15 @@ class EntityType:
     TABBY_TEXTURE = "tabby_cat.png"
     TABBY_ALLEGIANCE = Allegiance.ALLY
 
+    SMALLDOG_HEALTH = 3
+    SMALLDOG_DAMAGE = 1
+    SMALLDOG_MOVEMENT_TYPE = MovementType.ORTHOGONAL
+    SMALLDOG_MOVEMENT_RANGE = 2
+    SMALLDOG_ATTACK_TYPE = AttackType.ORTHOGONAL
+    SMALLDOG_ATTACK_RANGE = 2
+    SMALLDOG_TEXTURE = "small_dog.png"
+    SMALLDOG_ALLEGIANCE = Allegiance.FOE
+
 
     """
     TABBY_CAT = (3, 1, MovementType.ORTHOGONAL, 2, AttackType.ORTHOGONAL, 2, "tabby_cat.png", Allegiance.ALLY)

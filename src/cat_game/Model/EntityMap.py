@@ -1,5 +1,6 @@
 from .Entity.Entity import Entity
 from .Entity.TabbyCat import TabbyCat
+from .Entity.SmallDog import SmallDog
 from .TerrainMap import TerrainMap
 import random as rand
 
@@ -101,6 +102,7 @@ class EntityMap:
         for row in self.__entity_matrix:
             for e in row:
                 if e == self.__PASSABLE: print(".", end=" ")
-                if e == self.__IMPASSABLE: print("w", end=" ")
-                if type(e) == TabbyCat: print("T", end=" ")
+                elif e == self.__IMPASSABLE: print("w", end=" ")
+                elif type(e) is TabbyCat: print("T", end=" ")
+                elif type(e) is SmallDog: print("S", end=" ")
             print()
