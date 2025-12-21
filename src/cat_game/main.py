@@ -1,6 +1,10 @@
 # main file
 import pygame as pg
 import pygame_gui as pgg
+from Model.Level import Level
+from Model.Roster import Roster
+from Model.Entity.TabbyCat import TabbyCat
+
 
 def main():
     main_entry = Main()
@@ -128,18 +132,26 @@ class Game:
         self.__BLACK = (0, 0, 0)
 
         self.__continue = False # if game has already started this will be true
-        self.__level = None # if game had already started this will not be empty
+        self.__roster = None # if game had already started this will not be empty
         self.__level_map = None # if game had already started this will not be empty
+        self.__level = None # if game had already started this will not be empty
 
     def play_game(self):
         # check if game has already been loaded
         if not self.__continue:
-            ...
+            self.__setup_game()
 
-        self.run_game()
+        self.__run_game()
 
+    def __setup_game(self):
+        self.__continue = True
+        self.__roster = self.__randomize_starting_roster()
+        self.__level = self.__load_level()
 
-    def run_game(self):
+        # DEBUG
+        self.__level.debug_display()
+
+    def __run_game(self):
         # background
         BACKGROUND = pg.Surface(self.__size)
         BACKGROUND.fill(self.__WHITE)
@@ -187,12 +199,26 @@ class Game:
             pg.display.update()
         ...
 
+    # generate random starting player roster
+    def __randomize_starting_roster(self, start_size=3, max_size=5):
+        roster = Roster(start_size)
+
+        for i in range(start_size):
+            #TODO randomize ally types, for now just TabbyCat
+            tabby_cat = TabbyCat()
+            roster.add(tabby_cat)
+
+        return roster
+
+
+
     # method generates level map based on difficulty
     def __load_level_map(self): ...
 
     # function loads current level from level map
     def __load_level(self):
-        ...
+        level = Level(self.__roster)
+        return level
 
 
 

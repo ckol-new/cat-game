@@ -5,8 +5,7 @@ from .TerrainMap import TerrainMap
 import random as rand
 
 class EntityMap:
-    def __init__(self, terrain_map, local_difficulty):
-        self.__local_difficulty = local_difficulty
+    def __init__(self, terrain_map):
         self.__PASSABLE = None # None represents passable
         self.__IMPASSABLE = 1 # 1 represents impassable
         self.__map_size = terrain_map.get_map_size()
