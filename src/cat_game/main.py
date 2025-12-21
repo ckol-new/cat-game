@@ -1,24 +1,189 @@
 # main file
-import pygame
-from Model.TerrainMap import TerrainMap
-from Model.EntityMap import EntityMap
-from Model.Entity.TabbyCat import TabbyCat
-from Model.ENUM.EntityType import EntityType
-from Model.Entity.SmallDog import SmallDog
-from Controller.MenuController import MenuController
-from View.Menu import Menu
+import pygame as pg
+import pygame_gui as pgg
 
 def main():
-    # get menu object
-    menu = go_to_menu()
-    game = None
+    main_entry = Main()
 
-def go_to_menu():
-    menu = Menu()
-    return menu
+class Main:
+    def __init__(self):
+        # initialize fields
+        self.SCREEN_WIDTH = 800
+        self.SCREEN_HEIGHT = 600
+        self.SCREEN_SIZE = (self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
 
-def go_to_game():
-    game = MenuController.start_game()
+        # initialize pygame stuff
+        pg.init()
+        self.__screen = pg.display.set_mode(self.SCREEN_SIZE)
+
+        # open menu
+        self.__menu = Menu(self.__screen, self)
+        self.__game = None
+        self.open_menu()
+
+    def open_menu(self):
+        self.__menu.open_menu()
+    def close_menu(self): ...
+
+    def open_game(self):
+        # if game is not already started, make new game
+        if self.__game is None:
+            self.__game = Game(self.__screen, self)
+
+        self.__game.play_game()
+
+class Menu:
+    def __init__(self, screen, main):
+        self.__screen = screen
+        self.__main = main
+        self.__size = (screen.get_width(), screen.get_height())
+        self.__ORIGIN = (0, 0)
+        self.__CENTER_HORZ = self.__size[0] / 2
+        self.__CENTER_VERT = self.__size[1] /2
+        self.__BUTTON_SIZE = (self.__size[0] / 10, self.__size[1] / 10)
+        self.__PADDING = 20
+        self.__MARGIN = 20
+        self.__WHITE = (255, 255, 255)
+        self.__BLACK = (0, 0, 0)
+
+    def open_menu(self):
+        # launch menu loop
+        BACKGROUND = pg.Surface(self.__size)
+        BACKGROUND.fill(self.__WHITE)
+        self.__screen.blit(BACKGROUND)
+
+        # get manager
+        manager = pgg.UIManager(self.__size)
+
+        # get buttons
+        options_button_pos = (self.__CENTER_HORZ - (self.__BUTTON_SIZE[0] / 2), self.__CENTER_VERT - self.__BUTTON_SIZE[1] / 2)
+        start_button_pos = (options_button_pos[0], options_button_pos[1] - self.__BUTTON_SIZE[1] - self.__PADDING)
+        quit_button_pos = (options_button_pos[0], options_button_pos[1] + self.__BUTTON_SIZE[1] + self.__PADDING)
+
+        start_button = pgg.elements.UIButton(
+            relative_rect=pg.Rect(start_button_pos, self.__BUTTON_SIZE),
+            text="START",
+            manager=manager
+        )
+        options_button = pgg.elements.UIButton(
+            relative_rect=pg.Rect(options_button_pos, self.__BUTTON_SIZE),
+            text="OPTIONS",
+            manager=manager
+        )
+        quit_button = pgg.elements.UIButton(
+            relative_rect=pg.Rect(quit_button_pos, self.__BUTTON_SIZE),
+            text="QUIT",
+            manager=manager
+        )
+
+        # main loop
+        running = True
+        clock = pg.time.Clock()
+        while running:
+            # delta time
+            dt = clock.tick(60) / 1000.0
+
+            # event handling
+            events = pg.event.get()
+            for event in events:
+                if event.type == pg.QUIT:
+                    running = False
+                    pg.quit()
+                    exit()
+
+                manager.process_events(event)
+                if event.type == pgg.UI_BUTTON_PRESSED:
+                    if event.ui_element == start_button:
+                        self.__main.open_game()
+                    if event.ui_element == options_button:
+                        #DEBUG
+                        print("OPTIONS")
+                    if event.ui_element == quit_button:
+                        running = False
+                        pg.quit()
+                        exit()
+
+            # refresh screen
+            self.__screen.blit(BACKGROUND)
+
+            # update manager
+            manager.update(dt)
+            manager.draw_ui(self.__screen)
+
+            # update screen
+            pg.display.update()
+
+class Game:
+    def __init__(self, screen, main):
+        self.__screen = screen
+        self.__main = main
+        self.__size = (screen.get_width(), screen.get_height())
+        self.__ORIGIN = (0, 0)
+        self.__CENTER_HORZ = self.__size[0] / 2
+        self.__CENTER_VERT = self.__size[1] / 2
+        self.__BUTTON_SIZE = (self.__size[0] / 10, self.__size[1] / 10)
+        self.__PADDING = 20
+        self.__MARGIN = 20
+        self.__WHITE = (255, 255, 255)
+        self.__BLACK = (0, 0, 0)
+
+        self.__continue = False # if game has already started this will be true
+        self.__level = None # if game had already started this will not be empty
+        self.__level_map = None # if game had already started this will not be empty
+
+    def play_game(self):
+        # check if game has already been loaded
+        if not self.__continue:
+            ...
+
+        self.run_game()
+
+
+    def run_game(self):
+        # background
+        BACKGROUND = pg.Surface(self.__size)
+        BACKGROUND.fill(self.__WHITE)
+        self.__screen.blit(BACKGROUND)
+
+        # manager
+        manager = pgg.UIManager(self.__size)
+
+
+        # main loop
+        running = True
+        clock = pg.time.Clock()
+        while running:
+            # delta time
+            dt = clock.tick(60) / 1000.0
+            # event handling
+            events = pg.event.get()
+            for event in events:
+                if event.type == pg.QUIT:
+                    running = False
+                    pg.quit()
+                    exit()
+
+                manager.process_events(event)
+
+            # refresh screen
+            self.__screen.blit(BACKGROUND)
+
+            # update manager
+            manager.update(dt)
+            manager.draw_ui(self.__screen)
+
+            # update screen
+            pg.display.update()
+        ...
+
+    # method generates level map based on difficulty
+    def __load_level_map(self): ...
+
+    # function loads current level from level map
+    def __load_level(self):
+        ...
+
+
 
 if __name__ == "__main__":
     main()
