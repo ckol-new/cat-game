@@ -148,6 +148,14 @@ class Game:
         # manager
         manager = pgg.UIManager(self.__size)
 
+        # buttons
+        menu_button_pos = self.__ORIGIN
+        menu_button = pgg.elements.UIButton(
+            relative_rect=pg.Rect(menu_button_pos, self.__BUTTON_SIZE),
+            text="MENU",
+            manager=manager
+                                            )
+
 
         # main loop
         running = True
@@ -164,6 +172,9 @@ class Game:
                     exit()
 
                 manager.process_events(event)
+                if event.type == pgg.UI_BUTTON_PRESSED:
+                    if event.ui_element == menu_button:
+                        self.__main.open_menu()
 
             # refresh screen
             self.__screen.blit(BACKGROUND)
