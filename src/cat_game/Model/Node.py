@@ -13,6 +13,11 @@ class Node:
     def add_event(self, event): self.event = event
 
     def to_string(self): return f"({self.rank}, {self.order})"
+    def print_connections_to(self):
+        if self.connect_to is None: return
+
+        for n in self.connect_to:
+            print(n.to_string() + " ", end="")
 
     def get_evenet(self): return self.event
 

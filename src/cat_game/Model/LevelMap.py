@@ -16,6 +16,8 @@ class LevelMap:
         self.node_generator()
         self.generate_connections()
         self.sort_node_map()
+
+        #DEBUG
         self.debug_display()
 
 
@@ -82,7 +84,7 @@ class LevelMap:
             # make sure is less than max number of connections
             if len(connection_order) > self.__max_connection:
                 # random number of connections
-                rand_num = randrange(0, self.__max_connection + 1)
+                rand_num = randrange(1, self.__max_connection + 1)
 
                 while len(connection_order) > rand_num:
                     # random index to be removed
@@ -112,11 +114,13 @@ class LevelMap:
             if rank == 0:
                 node = self.__node_map.get(0)[0]
                 print(node.to_string(), end=" ")
+                node.print_connections_to()
                 print()
                 continue
 
             for order in range(self.__order_size):
                 node = self.__node_map.get(rank)[order]
                 print(node.to_string(), end=" ")
-            print()
+                node.print_connections_to()
+                print()
 
