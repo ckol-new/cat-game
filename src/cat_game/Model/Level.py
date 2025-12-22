@@ -1,9 +1,11 @@
+from multiprocessing.forkserver import connect_to_new_process
+
 from .TerrainMap import TerrainMap
 from .EntityMap import EntityMap
 from .Entity.SmallDog import SmallDog
 
 class Level:
-    def __init__(self, roster, area=None, local_difficulty=3):
+    def __init__(self, roster, area=None, local_difficulty=3, connecting_from=None, connecting_to=None):
         self.__area = area
         self.__local_diff = local_difficulty
         self.__ally_roster = roster
@@ -15,7 +17,12 @@ class Level:
 
         self.__randomize_ally_position()
 
+        # connections
+        self.__connecting_from = connecting_from
+        self.__connecting_to = connecting_to
+
         #TODO implement player choosing wear allies go, randomize rewards, etc.
+
 
     # load terrain based on area
     def __load_terrain(self):
@@ -73,6 +80,10 @@ class Level:
     # randomize player reward options (based on local_difficulty and area)
     def __randomize_reward_options(self):
         ...
+
+    # add connecting from
+    def add_connection_from(self, connecting_from): self.__connecting_from = connecting_from
+    def add_connection_to(self, connecting_to): self.__connecting_to = connecting_to
 
     #DEBUG
     def debug_display(self):

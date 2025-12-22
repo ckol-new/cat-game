@@ -4,6 +4,7 @@ import pygame_gui as pgg
 from Model.Level import Level
 from Model.Roster import Roster
 from Model.Entity.TabbyCat import TabbyCat
+from Model.LevelMap import LevelMap
 
 
 def main():
@@ -147,6 +148,7 @@ class Game:
         self.__continue = True
         self.__roster = self.__randomize_starting_roster()
         self.__level = self.__load_level()
+        self.__level_map = self.__load_level_map()
 
         # DEBUG
         self.__level.debug_display()
@@ -213,7 +215,8 @@ class Game:
 
 
     # method generates level map based on difficulty
-    def __load_level_map(self): ...
+    def __load_level_map(self):
+        self.__level_map = LevelMap()
 
     # function loads current level from level map
     def __load_level(self):
